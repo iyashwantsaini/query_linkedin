@@ -8,4 +8,3 @@ numpy==1.16.5
 Werkzeug==0.16.0
 pandas==0.25.1
 git+git://github.com/austinoboyle/scrape-linkedin-selenium.git
-selenium
