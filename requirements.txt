@@ -1,0 +1,10 @@
+ 
+Flask==1.1.1
+gunicorn==19.9.0
+itsdangerous==1.1.0
+Jinja2==2.10.3
+MarkupSafe==1.1.1
+numpy==1.16.5
+Werkzeug==0.16.0
+pandas==0.25.1
+git+git://github.com/austinoboyle/scrape-linkedin-selenium.git
