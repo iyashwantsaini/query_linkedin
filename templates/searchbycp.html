@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@900&display=swap" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <title>Query Linkedin</title>
+  </head>
+  <body style="background-color: #000000; color: #FFFFFF;">
+    <h1 style="font-family: 'Merriweather', serif; text-align: center; font-size: 100px">Query Linkedin <i class="fa fa-linkedin-square" aria-hidden="true"></i></h1>
+    <br>
+    <br>
+    <br>
+    <form method="post" action="{{ url_for('cpresult') }}">
+                    <div>
+                        <div class="col">
+                            <input type="text" class="form-control" placeholder="Enter the profession" name="prof">
+                        </div>
+                        <br>
+                        <div class="col">
+                            <input type="text" class="form-control" placeholder="Enter the country" name="nation">
+                        </div>
+                        <br>
+                        <div class="col">
+                            <input type="text" class="form-control" placeholder="Enter the number of profiles" name="number">
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="padding: 10px; margin: 15px">Show Profile Links</button>
+                        <br>
+                    </div>
+                </form>
+                <form method="post" action="{{ url_for('scrape') }}">
+                        <button type="submit" class="btn btn-primary" style="padding: 10px; margin: 15px">Scrape all profiles</button>
+                </form>
+                <div class="panel panel-default">
+                     <div class="panel-heading">
+                                <h2 style="margin: 15px;">Linkedin Information<h2>
+                            </div> 
+                <div class="panel-body">
+                      <div>
+                      <table class="table table-striped table-bordered" style="color: #FFFFFF;">
+
+                    {% for table in tables %}
+                    {{ table|safe }}
+                    {% endfor %}
+                </table>
+            </div>
+                </div>
+            </div>
+            <br>
+         <form method="post" action="{{ url_for('searchbyurl') }}">
+                        <button type="submit" class="btn btn-primary btn-lg btn-block">Search by Linkedin URL</button>
+                </form>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+  </body>
+</html>
