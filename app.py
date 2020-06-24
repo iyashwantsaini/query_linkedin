@@ -2,11 +2,20 @@ from flask import Flask, render_template, request, send_file
 from scrape_linkedin import ProfileScraper
 import pandas as pd
 from bs4 import BeautifulSoup
+from selenium import webdriver
 import requests
 #from gpapi import GimmeProxyApi
 import time
 import json 
 app = Flask(__name__)
+
+GOOGLE_CHROME_PATH = '/app/.apt/usr/bin/google_chrome'
+CHROMEDRIVER_PATH = '/app/.chromedriver/bin/chromedriver'
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_argument('--disable-gpu')
+chrome_options.add_argument('--no-sandbox')
+chrome_options.binary_location = GOOGLE_CHROME_PATH
+browser = webdriver.Chrome(execution_path=CHROMEDRIVER_PATH, chrome_options=chrome_options)
 
 def getdata(url):
 	headers = {
