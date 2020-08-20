@@ -7,7 +7,7 @@ import requests
 import json 
 app = Flask(__name__)
 
-
+my_cook='AQEDARp9aBMDsTpCAAABdAsxhSIAAAF0Lz4JIk4AfYbewgSlKOpeSBE2aVmA5jx1IvylHf5IxZlRrsUGheUMWpRssg4udUEBThh4mx_JDxaSKAaZkpDca6D0rsRk4Gyn_4O206j1X3QYhcyyeR6schgY'
 
 def getdata(url):
 	headers = {
@@ -34,7 +34,7 @@ def urlresult():
     f=open("sample.json", "w")
     new=name.split("in/",1)[1]
     
-    with ProfileScraper(cookie='AQEDAS9oddoD86TqAAABc9SQvb8AAAF0ID7MNE4AoREn4y16HO3_4KF9SquPvd-zZP6JZbc_f1w-QDqCOTzB4Y7kN92646OpVNOXf50hizB3mGH_iEWCwGmiVElREu7f2EMRs5g3ryvvfeE66jn5vczy') as scraper:
+    with ProfileScraper(cookie=my_cook) as scraper:
       profile = scraper.scrape(user=new)
       l.append(profile.to_dict())
     json_object = json.dumps(l, indent = 1) 
@@ -128,7 +128,7 @@ def scrape():
     for name in urls : 
         new=name.split("in/",1)[1]
 	
-        with ProfileScraper(cookie='AQEDAS9oddoD86TqAAABc9SQvb8AAAF0ID7MNE4AoREn4y16HO3_4KF9SquPvd-zZP6JZbc_f1w-QDqCOTzB4Y7kN92646OpVNOXf50hizB3mGH_iEWCwGmiVElREu7f2EMRs5g3ryvvfeE66jn5vczy') as scraper:
+        with ProfileScraper(cookie=my_cook) as scraper:
             profile = scraper.scrape(user=new)
             l.append(profile.to_dict())
     json_object = json.dumps(l, indent = 1) 

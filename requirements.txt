@@ -1,4 +1,3 @@
- 
 Flask==1.1.1
 gunicorn==19.9.0
 itsdangerous==1.1.0
@@ -8,10 +7,9 @@ numpy==1.16.5
 Werkzeug==0.16.0
 pandas==0.25.1
 requests
-# git+git://github.com/austinoboyle/scrape-linkedin-selenium.git
-
 beautifulsoup4
 bs4
 click
 selenium
 joblib
+lxml
