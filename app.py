@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, send_file
-from scrape_linkedin import ProfileScraper
+from query_lib.ProfileScraper import ProfileScraper
 import pandas as pd
 from bs4 import BeautifulSoup
 import requests
@@ -7,14 +7,6 @@ import requests
 import json 
 app = Flask(__name__)
 
-from selenium import webdriver
-import os
-chrome_options = webdriver.ChromeOptions()
-chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-chrome_options.add_argument("--headless")
-chrome_options.add_argument("--disable-dev-shm-usage")
-chrome_options.add_argument("--no-sandbox")
-driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
 
 
 def getdata(url):
