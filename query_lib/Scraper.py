@@ -7,6 +7,15 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
+from selenium import webdriver
+import os
+
+options = webdriver.ChromeOptions()
+options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+options.add_argument("--headless")
+options.add_argument("--disable-dev-shm-usage")
+options.add_argument("--no-sandbox")
+driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=options)
 
 class Scraper(object):
     """
@@ -22,7 +31,7 @@ class Scraper(object):
         - timeout {float}: time to wait for page to load first batch of async content
     """
 
-    def __init__(self, cookie=None, scraperInstance=None, driver=selenium.webdriver.Chrome, driver_options={}, scroll_pause=0.1, scroll_increment=300, timeout=10):
+    def __init__(self, cookie=None, scraperInstance=None, driver=driver, driver_options={}, scroll_pause=0.1, scroll_increment=300, timeout=10):
         if type(self) is Scraper:
             raise Exception(
                 'Scraper is an abstract class and cannot be instantiated directly')
