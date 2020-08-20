@@ -36,8 +36,23 @@
                     </div>
                 </form>
                 <form method="post" action="{{ url_for('scrape') }}">
-                        <button type="submit" class="btn btn-primary" style="padding: 10px; margin: 15px">Scrape all profiles</button>
+                    <div>
+                        <div class="col">
+                            <input type="text" class="form-control" placeholder="Enter the profession" name="prof">
+                        </div>
+                        <br>
+                        <div class="col">
+                            <input type="text" class="form-control" placeholder="Enter the country" name="nation">
+                        </div>
+                        <br>
+                        <div class="col">
+                            <input type="text" class="form-control" placeholder="Enter the number of profiles" name="number">
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="padding: 10px; margin: 15px">Scrape All Profiles</button>
+                        <br>
+                    </div>
                 </form>
+                
                 <div class="panel panel-default">
                      <div class="panel-heading">
                                 <h2 style="margin: 15px;">Linkedin Information<h2>

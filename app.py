@@ -4,16 +4,14 @@ import pandas as pd
 from bs4 import BeautifulSoup
 import requests
 #from gpapi import GimmeProxyApi
-import time
 import json 
 app = Flask(__name__)
 
 def getdata(url):
 	headers = {
-	"User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:70.0) Gecko/20100101 Firefox/70.0"
+    	"User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:70.0) Gecko/20100101 Firefox/70.0"
 	}
-	r =requests.get(url,headers=headers)
-	return r.text
+	return requests.get(url,headers=headers).text
 
 @app.route('/', methods=["POST", "GET"])
 def qlinkedin():
@@ -34,7 +32,7 @@ def urlresult():
     f=open("sample.json", "w")
     new=name.split("in/",1)[1]
     
-    with ProfileScraper(cookie='AQEDAS9oddoAec7fAAABcD_bsSwAAAFy_6x9m1EAx95DMXjHJwD-5r2oOCGGAoSFV3WMprqlWBST_FgB77_Lt8DlUPOCXLQJKD10pbNvoW_3sndp1_4OJoU-Os_I2A7ECwpOx1I8rkkf9fF0fiVh_qsd') as scraper:
+    with ProfileScraper(cookie='AQEDAS9oddoD86TqAAABc9SQvb8AAAF0ID7MNE4AoREn4y16HO3_4KF9SquPvd-zZP6JZbc_f1w-QDqCOTzB4Y7kN92646OpVNOXf50hizB3mGH_iEWCwGmiVElREu7f2EMRs5g3ryvvfeE66jn5vczy') as scraper:
       profile = scraper.scrape(user=new)
       l.append(profile.to_dict())
     json_object = json.dumps(l, indent = 1) 
@@ -48,77 +46,87 @@ def urlresult():
 
 @app.route('/cpresult', methods=["POST"])
 def cpresult():
+    urls = set()
     prof=request.form['prof']
     print(';hello')
     nation=request.form['nation']
     n=request.form['number']
-    time.sleep(2)
+    n=int(n)
+    #time.sleep(2)
     #n = int(input('Enter the number of results you want\n'))
     i = 0
 	#nation = input("Enter the nation: ")
     prof = prof.split()
     prof = '+'.join(prof)
     page = 0
-    n=int(n)
-    while i<n:
-        urls = []
-        lurls=[]
-        data = getdata(f"https://www.google.co.in/search?start={page}&q=site:linkedin.com/in/%20AND%20%22{prof}%22%20AND%20{nation}")
-        if page==0:
-            print(f"https://www.google.co.in/search?start={page}&q=site:linkedin.com/in/%20AND%20%22{prof}%22%20AND%20{nation}")
-        soup = BeautifulSoup(data, "lxml")
-		# print(soup.prettify())
-        links = soup.find_all("a", attrs={"data-uch": "1"})
-        for link in links:
-            urls.append(link['href'][7:])
-        for u in urls:
-            l = u.split("&")
-            lurls.append(l[0])
-        i = len(lurls)
-        page+=1
+    while 1:
+		# urls = []
+         x,y = 0,0
+         data = getdata(f"https://www.bing.com/search?q=site%3alinkedin.com%2fin%2f+AND+%22{prof}%22+AND+{nation}&sp=-1&pq=site%3alinkedin.com%2fin%2f+and+%22{prof}%22+and+{nation}&sc=1-52&qs=n&sk=&cvid=B8AD94293F0C48109178B93CC18447EB&first={10*page+1}")
+         soup = BeautifulSoup(data, "lxml")
+         if page==0:
+             x = soup.prettify()
+         else:
+            y = soup.prettify()
+         links = soup.find_all("li",{"class":"b_algo"})
+         for link in links:
+            urls.add(link.h2.a.get('href'))
+		#print(urls[i:])
+         i = len(urls)
+         if i>=n:
+             break
+         page+=1
 
-    ok=lurls[:n]
-    d = {"Profile Links": ok}
+    urls = list(urls)
+    d = {"Profile Links": urls}
     df = pd.DataFrame(d)
     return render_template('searchbycp.html', tables=[df.to_html(render_links=True,classes=['table table-striped table-bordered table-hover table-responsive text-white'])])
 
 @app.route('/scrape', methods=["POST"])
 def scrape():
+    print('hello and ok')
+    urls = set()
+    print('2')
     prof=request.form['prof']
+    print('helllllllooooo')
     nation=request.form['nation']
     n=request.form['number']
-    time.sleep(2)
+    print('1')
+    n=int(n)
+    #time.sleep(2)
     #n = int(input('Enter the number of results you want\n'))
     i = 0
 	#nation = input("Enter the nation: ")
-	#prof = input("Enter the profession: ").split()
     prof = prof.split()
     prof = '+'.join(prof)
     page = 0
-    n=int(n)
-    while i<n:
-        urls = []
-        lurls=[]
-        data = getdata(f"https://www.google.co.in/search?start={page}&q=site:linkedin.com/in/%20AND%20%22{prof}%22%20AND%20{nation}")
-        if page==0:
-            print(f"https://www.google.co.in/search?start={page}&q=site:linkedin.com/in/%20AND%20%22{prof}%22%20AND%20{nation}")
-        soup = BeautifulSoup(data, "lxml")
-		# print(soup.prettify())
-        links = soup.find_all("a", attrs={"data-uch": "1"})
-        for link in links:
-            urls.append(link['href'][7:])
-        for u in urls:
-            l = u.split("&")
-            lurls.append(l[0])
-        i = len(lurls)
-        page+=1
+    while 1:
+		# urls = []
+         x,y = 0,0
+         data = getdata(f"https://www.bing.com/search?q=site%3alinkedin.com%2fin%2f+AND+%22{prof}%22+AND+{nation}&sp=-1&pq=site%3alinkedin.com%2fin%2f+and+%22{prof}%22+and+{nation}&sc=1-52&qs=n&sk=&cvid=B8AD94293F0C48109178B93CC18447EB&first={10*page+1}")
+         soup = BeautifulSoup(data, "lxml")
+         if page==0:
+             x = soup.prettify()
+         else:
+            y = soup.prettify()
+         links = soup.find_all("li",{"class":"b_algo"})
+         for link in links:
+            urls.add(link.h2.a.get('href'))
+		#print(urls[i:])
+         i = len(urls)
+         if i>=n:
+             break
+         page+=1
 
-    ok=lurls[:n]
+    urls = list(urls)
+    print(urls)
+    #ok=lurls[:n]
     l=[]
     outfile=open("profile.json", "w")
-    for name in ok : 
+    for name in urls : 
         new=name.split("in/",1)[1]
-        with ProfileScraper(cookie='AQEDAS9oddoAec7fAAABcD_bsSwAAAFy_6x9m1EAx95DMXjHJwD-5r2oOCGGAoSFV3WMprqlWBST_FgB77_Lt8DlUPOCXLQJKD10pbNvoW_3sndp1_4OJoU-Os_I2A7ECwpOx1I8rkkf9fF0fiVh_qsd') as scraper:
+	
+        with ProfileScraper(cookie='AQEDAS9oddoD86TqAAABc9SQvb8AAAF0ID7MNE4AoREn4y16HO3_4KF9SquPvd-zZP6JZbc_f1w-QDqCOTzB4Y7kN92646OpVNOXf50hizB3mGH_iEWCwGmiVElREu7f2EMRs5g3ryvvfeE66jn5vczy') as scraper:
             profile = scraper.scrape(user=new)
             l.append(profile.to_dict())
     json_object = json.dumps(l, indent = 1) 
@@ -130,8 +138,6 @@ def scrape():
 
 
 if __name__ == '__main__':
-    app.run()
-
-
-
+    # app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(debug=True)
 
